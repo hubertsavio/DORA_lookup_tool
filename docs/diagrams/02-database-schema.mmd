@@ -1,0 +1,52 @@
+erDiagram
+    DOCUMENTS ||--o{ DOCUMENT_TOPICS : has
+    DOCUMENTS ||--o{ DOCUMENT_RELATIONSHIPS : source
+    DOCUMENTS ||--o{ DOCUMENT_RELATIONSHIPS : target
+    TOPICS ||--o{ DOCUMENT_TOPICS : belongs_to
+    TOPICS ||--o| TOPICS : parent
+    
+    DOCUMENTS {
+        int id PK
+        string title
+        text summary
+        text full_text
+        enum legal_level
+        enum document_type
+        enum binding_status
+        enum source_body
+        string url
+        date publication_date
+        date last_updated
+        string applicability
+        boolean is_qa
+        enum qa_status
+        boolean is_oversight_only
+        datetime created_at
+        datetime updated_at
+        datetime scraped_at
+    }
+    
+    TOPICS {
+        int id PK
+        string name
+        text description
+        int parent_id FK
+    }
+    
+    DOCUMENT_TOPICS {
+        int document_id FK
+        int topic_id FK
+    }
+    
+    DOCUMENT_RELATIONSHIPS {
+        int source_id FK
+        int target_id FK
+        string relationship_type
+    }
+    
+    SEARCH_LOGS {
+        int id PK
+        string query
+        int results_count
+        datetime timestamp
+    }

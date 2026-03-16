@@ -1,0 +1,21 @@
+sequenceDiagram
+    participant User
+    participant React as React Frontend
+    participant API as FastAPI Backend
+    participant Search as Whoosh Search
+    participant DB as SQLite Database
+    
+    User->>React: Enter search query
+    React->>React: Update state
+    React->>API: GET /api/search?query=ICT&filters={}
+    API->>API: Validate request
+    API->>Search: Execute search query
+    Search->>Search: Parse query with BM25F
+    Search->>Search: Apply filters
+    Search->>DB: Fetch document IDs
+    DB-->>Search: Return document data
+    Search-->>API: Return search results
+    API->>API: Format response
+    API-->>React: JSON response with results
+    React->>React: Update UI state
+    React-->>User: Display results

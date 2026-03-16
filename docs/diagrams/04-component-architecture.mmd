@@ -1,0 +1,40 @@
+graph LR
+    subgraph "Frontend Components"
+        App[App.jsx]
+        SearchPage[SearchPage]
+        DetailPage[DocumentDetailPage]
+        AboutPage[AboutPage]
+        
+        SearchBar[SearchBar]
+        FilterPanel[FilterPanel]
+        DocCard[DocumentCard]
+        Header[Header]
+    end
+    
+    subgraph "Backend Modules"
+        AppPy[app.py]
+        APIRoutes[api/routes.py]
+        Database[models/database.py]
+        Search[utils/search_engine.py]
+        Scrapers[scrapers/eiopa_scraper.py]
+    end
+    
+    App --> SearchPage
+    App --> DetailPage
+    App --> AboutPage
+    
+    SearchPage --> SearchBar
+    SearchPage --> FilterPanel
+    SearchPage --> DocCard
+    
+    App --> Header
+    
+    SearchPage -.->|API Calls| APIRoutes
+    DetailPage -.->|API Calls| APIRoutes
+    
+    AppPy --> APIRoutes
+    APIRoutes --> Database
+    APIRoutes --> Search
+    APIRoutes --> Scrapers
+    
+    Database -.->|Uses| Search

@@ -1,0 +1,40 @@
+graph TB
+    subgraph "Client Layer"
+        Browser[Web Browser]
+    end
+    
+    subgraph "Presentation Layer - Port 3000"
+        React[React Frontend]
+        Vite[Vite Dev Server]
+        Router[React Router]
+    end
+    
+    subgraph "Application Layer - Port 8000"
+        FastAPI[FastAPI Server]
+        Routes[API Routes]
+        CORS[CORS Middleware]
+    end
+    
+    subgraph "Business Logic Layer"
+        SearchEngine[Whoosh Search Engine]
+        Scraper[EIOPA Web Scraper]
+        Models[SQLAlchemy Models]
+    end
+    
+    subgraph "Data Layer"
+        SQLite[(SQLite Database)]
+        SearchIndex[Search Index Files]
+    end
+    
+    Browser -->|HTTP/HTTPS| React
+    React -->|Component Rendering| Vite
+    React -->|Navigation| Router
+    React -->|REST API Calls| FastAPI
+    FastAPI -->|Request Validation| CORS
+    CORS -->|Route Handling| Routes
+    Routes -->|Search Queries| SearchEngine
+    Routes -->|Data Operations| Models
+    Routes -->|Web Scraping| Scraper
+    SearchEngine -->|Index R/W| SearchIndex
+    Models -->|ORM Queries| SQLite
+    Scraper -->|Store Documents| SQLite
